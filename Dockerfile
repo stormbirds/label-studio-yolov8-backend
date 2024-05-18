@@ -5,8 +5,11 @@ ENV PYTHONUNBUFFERED=True \
 
 WORKDIR /app
 COPY requirements.txt .
+# RUN pip install git+https://github.com/rwightman/pytorch-image-models.git
+# RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple gitpython
+RUN apt-get update && apt-get install -y git
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 COPY . ./
 

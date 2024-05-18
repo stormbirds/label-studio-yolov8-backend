@@ -27,5 +27,7 @@ services:
     links:
       - redis
     volumes:
+      - "./data/Data:/app/Data"
+      - "./data/runs:/app/runs"
       - "./data/server:/data"
       - "./logs:/tmp"

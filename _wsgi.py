@@ -1,3 +1,4 @@
+import json
 import os
 import argparse
 import logging
@@ -28,7 +29,7 @@ logging.config.dictConfig({
 })
 
 from label_studio_ml.api import init_app
-from model import YOLOv8Model
+from yolo_predictor import yoloV8backend
 
 
 _DEFAULT_CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'config.json')
@@ -101,8 +102,8 @@ if __name__ == "__main__":
         kwargs.update(parse_kwargs())
 
     if args.check:
-        print('Check "' + YOLOv8Model.__name__ + '" instance creation..')
-        model = YOLOv8Model(**kwargs)
+        print('Check "' + yoloV8backend.__name__ + '" instance creation..')
+        model = yoloV8backend(**kwargs)
 
     app = init_app(
         model_class=YOLOModel,
@@ -118,7 +119,7 @@ if __name__ == "__main__":
 else:
     # for uWSGI use
     app = init_app(
-        model_class=YOLOv8Model,
+        model_class=yoloV8backend,
         model_dir=os.environ.get('MODEL_DIR', os.path.dirname(__file__)),
         redis_queue=os.environ.get('RQ_QUEUE_NAME', 'default'),
         redis_host=os.environ.get('REDIS_HOST', 'localhost'),
